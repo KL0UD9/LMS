@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // Only add if it doesn't exist yet:
+            // Add the 'role' column if it doesn't already exist
             if (! Schema::hasColumn('users', 'role')) {
                 $table->string('role')
                       ->default('user')
