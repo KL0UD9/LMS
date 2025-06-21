@@ -17,34 +17,27 @@ use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
     public function index()
-    {
-
-        if (Auth::id()) {
-
-            $user_type = Auth::user()->usertype;
-
-            if ($user_type == 'admin') {
-
-                $user = User::all()->count();
-
-                $book = Book::all()->count();
-
-                $borrow = Borrow::where('status', 'approved')->count();
-
-                $returned = Borrow::where('status', 'returned')->count();
-
-
-                return view('admin.index', compact('user', 'book', 'borrow', 'returned'));
-            } else if ($user_type == 'user') {
-
-                $data = Book::all();
-
-                return view('home.index', compact('data'));
-            }
-        } else {
-            return view('home.index');
-        }
+{
+    if (! Auth::check()) {
+        return view('home.index');
     }
+
+    $user_type = Auth::user()->role;   // ← role, not usertype
+
+    if ($user_type === 'admin') {
+        $user     = User::count();
+        $book     = Book::count();
+        $borrow   = Borrow::where('status','approved')->count();
+        $returned = Borrow::where('status','returned')->count();
+
+        return view('admin.index', compact('user','book','borrow','returned'));
+    }
+
+    // fallback for normal users
+    $data = Book::all();
+    return view('home.index', compact('data'));
+}
+
 
     public function category_page()
     {
