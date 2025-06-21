@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'name'      => 'Kloud',
             'email'     => 'kloud@gmail.com',
             'password'  => Hash::make('12345678910'),
-            'usertype'  => 'user',      // ← old column
+            'role'      => 'user',     // ← renamed from usertype
         ]);
 
         // 3. Create an admin user
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             'name'      => 'Sunchung',
             'email'     => 'sunchungadmin@gmail.com',
             'password'  => Hash::make('12345678910@'),
-            'usertype'  => 'admin',     // ← old column
+            'role'      => 'admin',    // ← renamed from usertype
         ]);
     }
 }
